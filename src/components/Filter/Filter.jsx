@@ -1,15 +1,28 @@
 import React from 'react';
-const Filter = ({setFilterToState}) => {
+import { useDispatch, useSelector } from 'react-redux';
 
- const filterValue = event => {
-    let value =  event.currentTarget.value.toUpperCase();
-    setFilterToState(value);
-  }
+import { setFilter } from 'redux/filterSlice'
+import { getFilter } from 'redux/selectors';
+const Filter = () => {
+
+        const onSetFilter = payload => {
+        dispatch(setFilter(payload));
+      };
+    
+      const updateFilter = event => {
+        onSetFilter(event.target.value);
+      };
+    
+      const dispatch = useDispatch();
+    
+      const filter = useSelector(getFilter);
   
     return (
        <div>
         <h2>Find contacts by name</h2>
-        <input onChange={filterValue}  />
+        <input onChange={updateFilter}
+           value={filter}/>
+        
     </div>
     )
 }

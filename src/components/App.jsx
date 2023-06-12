@@ -1,21 +1,21 @@
 // import React, { useState } from 'react';
 import Form from './Form/Form';
 import Filter from './Filter/Filter';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import ContactList from './ContactList/ContactList';
 // import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { contactsSelectors, filterSelectors} from 'redux/selectors';
-import { createContactActions, updateContactActions } from 'redux/actions';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { contactsSelectors, filterSelectors} from 'redux/selectors';
+// import { createContactActions, updateContactActions } from 'redux/actions';
 // import { nanoid } from 'nanoid';
 
 export const App =()=> {
   // const [contacts, setContacts] = useState( ()=> JSON.parse(window.localStorage.getItem('contacts')) ?? '');
-  const { contacts } = useSelector(contactsSelectors)
-    const { filter } = useSelector(filterSelectors)
-  const dispatch = useDispatch()
+  // const { contacts } = useSelector(contactsSelectors)
+  // //   const { filter } = useSelector(filterSelectors)
+  // const dispatch = useDispatch()
   // const [filter, setFilter] = useState('');
-  console.log(contacts)
+  // console.log(contacts)
 
 
   // useEffect(() => {
@@ -24,11 +24,11 @@ export const App =()=> {
 
   
 
-  const formSubmitHandler = (data) => {
-//  repeatControl(data)
-    dispatch(createContactActions( { id: uuidv4(), name: data.name, number: data.number },))
+//   const formSubmitHandler = (data) => {
+// //  repeatControl(data)
+//     dispatch(createContactActions( { id: uuidv4(), name: data.name, number: data.number },))
     
-  }
+//   }
   //  const repeatControl = data => {
   //   let nameArray = [];
   //   nameArray = contacts.map(cur => cur.name);
@@ -56,26 +56,26 @@ export const App =()=> {
 //     );
 //   };
 
-  const setFilterToState = filterData => {
-   dispatch(updateContactActions(filterData))
-    // setFilter(filterData );
-  };
+  // const setFilterToState = filterData => {
+  //  dispatch(updateContactActions(filterData))
+  //   // setFilter(filterData );
+  // };
 
- const filterArr = fArr => {
-    let newArr = fArr.filter(cur =>
-      cur.name.toUpperCase().includes(filter),
-    );
-    return newArr;
-  };
+//  const filterArr = fArr => {
+//     let newArr = fArr.filter(cur =>
+//       cur.name.toUpperCase().includes(filter),
+//     );
+  //   return newArr;
+  // };
 
     return (
           <div className="App">
         <h1>Phonebook</h1>
-        <Form onSubmitData={formSubmitHandler} />
+        <Form  />
         <h1>Contacts</h1>
-        <Filter setFilterToState={setFilterToState} />
+        <Filter  />
         <ContactList
-           contacts={filterArr(contacts)}
+          //  contacts={filterArr(contacts)}
           // del={deleteContactFromContactList}
         />
       </div>

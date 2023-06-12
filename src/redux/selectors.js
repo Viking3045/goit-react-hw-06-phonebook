@@ -1,12 +1,12 @@
-export const contactsSelectors = (state) => state.contacts
-// export const filterSelectors = (state) =>  state.filter
-// console.log(contactsSelectors)
-export const filterSelectors = ({ contacts, filter }) => {
-  if (!filter) {
-    return contacts;
-  }
+
+export const getContacts = store => store.contacts;
+export const getFilteredContacts = ({ contacts = [], filter }) => {
+  const normalizedFilter = filter.toLowerCase();
   const result = contacts.filter(({ name }) => {
-    return name.toLowerCase().includes(filter.toLowerCase());
+    const normalizedName = name.toLowerCase();
+    return normalizedName.includes(normalizedFilter);
   });
   return result;
 };
+
+export const getFilter = store => store.filter;

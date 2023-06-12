@@ -1,29 +1,36 @@
-import { createSlice} from '@reduxjs/toolkit'
-import { initialState } from './initialState'
-import { v4 as uuidv4 } from 'uuid';
-
+import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from '@reduxjs/toolkit';
 
 const contactsSlice = createSlice({
-    name: 'contacts',
-	initialState,
-	reducers: {
-		createContacts: (state, { payload }) => {
-			state.contacts.push({
-				id: uuidv4(),
-				title: payload,
-				// completed: false,
-			})
-		},
-		updateContacts: (state, { payload }) => {
-			state.contacts.map((contacts) =>
-				contacts.id === payload.id ? { ...contacts, ...payload } : contacts
-			)
-		},
-		deleteContacts: (state, { payload }) => {
-			state.contacts.filter(({ id }) => id !== payload)
-		},
-	},
-})
+  name: 'contacts',
+  initialState: [],
+  reducers: {
+    addContact: {
+      reducer: (store, { payload }) => {
+        const isContactExist = store.find(
+          contact => contact.name.toLowerCase() === payload.name.toLowerCase()
+        );
+        if (isContactExist) {
+          alert(`User with name ${payload.name} is already in contacts`);
+          return;
+        }
 
-export const contactsReducer = contactsSlice.reducer
-export const { createContacts, deleteContacts, updateContacts } = contactsSlice.actions
+        return [...store, payload];
+      },
+
+      prepare: data => {
+        return {
+          payload: {
+            ...data,
+            id: nanoid(),
+          },
+        };
+      },
+    },
+    deleteContact: (store, { payload }) =>
+      store.filter(item => item.id !== payload),
+  },
+});
+
+export const { addContact, deleteContact } = contactsSlice.actions;
+export default contactsSlice.reducer;

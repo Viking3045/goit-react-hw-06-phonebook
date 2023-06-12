@@ -1,9 +1,14 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import { addContact } from 'redux/contactsSlice'
+import { getFilteredContacts } from 'redux/selectors'
+import { useSelector, useDispatch } from 'react-redux';
+
 import css from './Form.module.css'
-const Form = ({onSubmitData}) => {
+const Form = () => {
+    const dispatch = useDispatch();
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-
+  const contacts = useSelector(getFilteredContacts);
 const handelInputChange = event => {
     const {name,  value } = event.target;
   switch (name) {
@@ -18,23 +23,30 @@ const handelInputChange = event => {
    }
   };
 
- const handelSubmit = (event) => {
-    event.preventDefault();
-
-    let contact = { name: name, number: number };
-   onSubmitData(contact);
-   reset();
+  const handelSubmit = event => {
+      event.preventDefault();
   
-    };  
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+      const isContactExist = contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      );
+      if (isContactExist) {
+        alert(`User with name ${name} is already in contacts`);
+        return;
+      }
+  
+      dispatch(addContact({ name, number }));
+      setName('');
+      setNumber('');
+    };
+  // const reset = () => {
+  //   setName('');
+  //   setNumber('');
+  // };
   
 
     return (
       <form
-        // onSubmit={handelSubmit}
+        onSubmit={handelSubmit}
       >
           <label>
             Name
