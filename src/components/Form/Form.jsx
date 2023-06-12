@@ -38,11 +38,7 @@ const handelInputChange = event => {
       setName('');
       setNumber('');
     };
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
-  // };
-  
+
 
     return (
       <form

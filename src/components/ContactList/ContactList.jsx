@@ -7,7 +7,7 @@ import { getFilteredContacts } from 'redux/selectors'
 const ContactList = () => {
     const dispatch = useDispatch();
   const contacts = useSelector(getFilteredContacts);
- const  deleteId = id => {
+  const  deleteId = id => {
    dispatch(deleteContact(id));
   };
   const createList = () => {
@@ -29,24 +29,6 @@ const ContactList = () => {
 
     return <ul className={css.list}>{createList()}</ul>;
 }
-// ContactList.propTypes = {
-//   contacts: PropTypes.array.isRequired,
-//   del: PropTypes.func.isRequired,
-// };
-// ContactList.defaultProps = {
-//   contacts: [],
-// };
 
-// const ContactList = ({ contacts }) => {
-//     return (
-//         <ul>
-//         {contacts.map(({ name, id, number }) => (
-//           <li key={id}>
-//             {name}:{number}
-//           </li>
-//         ))}
-//       </ul>
-//     )
-// }
 
 export default ContactList
