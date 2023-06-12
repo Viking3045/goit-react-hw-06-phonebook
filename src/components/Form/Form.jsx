@@ -1,7 +1,5 @@
 import {useState} from 'react';
 import css from './Form.module.css'
-// import { nanoid } from 'nanoid';
-// import Filter from 'components/Filter/Filter';
 const Form = ({onSubmitData}) => {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
@@ -25,13 +23,6 @@ const handelInputChange = event => {
 
     let contact = { name: name, number: number };
    onSubmitData(contact);
-
-      // this.state.contacts.push({
-      // number: this.state.number,
-      // name: this.state.name,
-      // id: nanoid(2),
-      // });
-      // console.log(this.state.contacts)
    reset();
   
     };  
@@ -42,7 +33,9 @@ const handelInputChange = event => {
   
 
     return (
-        <form onSubmit={handelSubmit}>
+      <form
+        // onSubmit={handelSubmit}
+      >
           <label>
             Name
             <input

@@ -1,72 +1,64 @@
-import React from 'react';
+// import React, { useState } from 'react';
 import Form from './Form/Form';
 import Filter from './Filter/Filter';
 import { v4 as uuidv4 } from 'uuid';
 import ContactList from './ContactList/ContactList';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactsSelectors, filterSelectors} from 'redux/selectors';
+import { createContactActions, updateContactActions } from 'redux/actions';
 // import { nanoid } from 'nanoid';
 
 export const App =()=> {
-  const [contacts, setContacts] = useState( ()=> JSON.parse(window.localStorage.getItem('contacts')) ?? '');
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState( ()=> JSON.parse(window.localStorage.getItem('contacts')) ?? '');
+  const { contacts } = useSelector(contactsSelectors)
+    const { filter } = useSelector(filterSelectors)
+  const dispatch = useDispatch()
+  // const [filter, setFilter] = useState('');
+  console.log(contacts)
 
 
-  useEffect(() => {
-      // console.log(contacts)
-      window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  });
+  // useEffect(() => {
+  //     window.localStorage.setItem('contacts', JSON.stringify(contacts))
+  // });
 
-    
-  // },[])
-
-  //   componentDidUpdate(prevProps, prevState) {
-  //   // console.log('AppComponentDidUpdate')
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     // console.log('refresh pages')
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
-  //   }
-  // }
-  // componentDidMount() {
-  //   const contactsLocalStorage = JSON.parse(localStorage.getItem('contacts'))
-  //   if (contactsLocalStorage) {
-  //         this.setState({contacts: contactsLocalStorage})
-  //   }
-
-  // }
+  
 
   const formSubmitHandler = (data) => {
- repeatControl(data)
+//  repeatControl(data)
+    dispatch(createContactActions( { id: uuidv4(), name: data.name, number: data.number },))
     
   }
-   const repeatControl = data => {
-    let nameArray = [];
-    nameArray = contacts.map(cur => cur.name);
-    if (!nameArray.includes(data.name)) {
-      let arrayCont = [];
-      arrayCont = [
-        ...contacts,
-        { id: uuidv4(), name: data.name, number: data.number },
-      ];
-      return setContacts( arrayCont );
-    } else {
-      alert(' Контакт вже є у телефонній книзі!!!');
-    }
-  };
+  //  const repeatControl = data => {
+  //   let nameArray = [];
+  //   nameArray = contacts.map(cur => cur.name);
+  //   if (!nameArray.includes(data.name)) {
+  //     let arrayCont = [];
+  //     arrayCont = [
+  //       ...contacts,
+  //       { id: uuidv4(), name: data.name, number: data.number },
+  //     ];
+  //     return setContacts( arrayCont );
+  //   } else {
+  //     alert(' Контакт вже є у телефонній книзі!!!');
+  //   }
+  // };
 
- const  elementDelete = (arr, idContact) => {
-    let newArr = arr.filter(elem => elem.id !== idContact);
-    return newArr;
-  };
+//  const  elementDelete = (arr, idContact) => {
+//     let newArr = arr.filter(elem => elem.id !== idContact);
+//     return newArr;
+//   };
 
- const deleteContactFromContactList = idContact => {
-    let newArrAfterDel = elementDelete(contacts, idContact);
-    setContacts(
-       newArrAfterDel
-    );
-  };
+//  const deleteContactFromContactList = idContact => {
+//     let newArrAfterDel = elementDelete(contacts, idContact);
+//     setContacts(
+//        newArrAfterDel
+//     );
+//   };
 
- const setFilterToState = filterData => {
-    setFilter(filterData );
+  const setFilterToState = filterData => {
+   dispatch(updateContactActions(filterData))
+    // setFilter(filterData );
   };
 
  const filterArr = fArr => {
@@ -83,10 +75,11 @@ export const App =()=> {
         <h1>Contacts</h1>
         <Filter setFilterToState={setFilterToState} />
         <ContactList
-          contacts={filterArr(contacts)}
-          del={deleteContactFromContactList}
+           contacts={filterArr(contacts)}
+          // del={deleteContactFromContactList}
         />
       </div>
+       
 
     );
 }
